@@ -17,6 +17,7 @@ function SearchUser() {
     } else {
       setError(false);
       fetchusers(text);
+    
     }
   };
   const ClrUsers=()=>{

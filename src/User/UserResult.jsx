@@ -20,7 +20,7 @@ function UserResult() {
   } else {
     return (
       <div>
-        <img scr={IMg}></img>
+        <img src={IMg}></img>
         <h1 className="text-5xl">Loading...</h1>
       </div>
     );
