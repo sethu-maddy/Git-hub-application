@@ -15,9 +15,13 @@ function UserItem({ user: { login, avatar_url } }) {
         <div>
           <div>
             <h3 className=" card-title  "> {login}</h3>
-           
           </div>
-          <Link className="  test-base-content text-opacity-40" to={`/users/${login}`}>Go to profie</Link>
+          <Link
+            className="  test-base-content text-opacity-40"
+            to={`/user/${login}`}
+          >
+            Go to profie
+          </Link>
         </div>
       </div>
     </div>
