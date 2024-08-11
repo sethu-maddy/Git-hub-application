@@ -6,8 +6,9 @@ const GithubContext = createContext();
 export const Githubprovider = ({ children }) => {
   const initialState = {
     Users: [],
-    User:{},
+    User: {},
     isloadind: false,
+    repos: [],
   };
   const [state, dispatch] = useReducer(GithubReducer, initialState);
 
@@ -24,9 +25,9 @@ export const Githubprovider = ({ children }) => {
         },
       }
     );
-    console.log(resp)
+    console.log(resp);
     const { items } = await resp.json();
-    
+
     dispatch({
       type: "Get_Users",
       payload: items,
@@ -36,26 +37,44 @@ export const Githubprovider = ({ children }) => {
   // fetching single user this methood
   const oneuser = async (login) => {
     Setloading();
-    
+
     const resp = await fetch(`https://api.github.com/users/${login}`, {
       headers: {
         Authorization: `token${process.env.REACT_APP_TOKEN}`,
       },
     });
-    console.log(resp)
-    if(resp.status === 404){
-      window.location ="/notfounff"
-    }
-    else{
+    console.log(resp);
+    if (resp.status === 404) {
+      window.location = "/notfounff";
+    } else {
       const data = await resp.json();
-    
+
       dispatch({
         type: "Get_User",
         payload: data,
       });
-
     }
-    
+  };
+  //get user repos
+  const fetchuserrepos = async (login) => {
+    const params = new URLSearchParams({
+     sort:"created",
+     per_page:10
+    });
+    Setloading();
+
+    const resp = await fetch(`https://api.github.com/users/${login}/repos?${params}`, {
+      headers: {
+        Authorization: `token${process.env.REACT_APP_TOKEN}`,
+      },
+    });
+    console.log(resp);
+    const data = await resp.json();
+
+    dispatch({
+      type: "Get_repos",
+      payload: data,
+    });
   };
 
   const Setloading = () => {
@@ -72,8 +91,10 @@ export const Githubprovider = ({ children }) => {
         isloadind: state.isloadind,
         fetchusers,
         ClearUsers,
-        User:state.User,
-        oneuser
+        User: state.User,
+        oneuser,
+        repos: state.repos,
+        fetchuserrepos,
       }}
     >
       {children}

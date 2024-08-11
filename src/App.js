@@ -5,6 +5,7 @@ import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Notfound from "./pages/Notfound";
+import Gitrepos from "./pages/Git_Repos"
 import { Githubprovider } from "./Context/Github_Cotext";
 import User from "./pages/User_ind";
 function App() {
@@ -18,6 +19,7 @@ function App() {
               <Route exact path="/" element={<Home />}></Route>
               <Route exact path="/about" element={<About />}></Route>
               <Route exact path="/user/:login" element={<User />}></Route>
+              <Route exact path="/user/:login/repos" element={<Gitrepos />}></Route>
               <Route exact path="/*" element={<Notfound />}></Route>
             </Routes>
           </main>
